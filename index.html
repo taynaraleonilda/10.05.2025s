@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rota Rural Mercedes - App</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: sans-serif;
+    }
+    .pagina {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .pagina.ativa {
+      display: block;
+      opacity: 1;
+    }
+    .inicio {
+      background-color: #d4edda;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .logo { width: 250px; height: auto; }
+    .titulo-inicio { font-size: 2rem; color: #155724; }
+    .interna {
+      padding-top: 20px;
+      display: none;
+      min-height: 80vh;
+    }
+    .interna.ativa { display: block; }
+    .card:hover {
+      transform: scale(1.03);
+      transition: transform 0.2s ease-in-out;
+    }
+    footer {
+      background-color: #f8f9fa;
+      padding: 20px 0;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #6c757d;
+    }
+    footer a { color: #6c757d; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+
+<body>
+  <!-- Tela Inicial -->
+  <section id="pagina-inicial" class="pagina ativa inicio">
+    <img src="img/logotipo.png" alt="Logotipo" class="logo mb-3" />
+    <h1 class="titulo-inicio">Bem-vindo à Rota Rural Mercedes</h1>
+    <button class="btn btn-success mt-3" onclick="fazerLogin()">Fazer Login</button>
+    <button class="btn btn-outline-success mt-2" onclick="mostrarPagina('pagina-cadastro')">Cadastrar</button>
+  </section>
+
+  <!-- Tela de Login -->
+  <section id="pagina-login" class="pagina d-flex flex-column justify-content-center align-items-center" style="height: 100vh;">
+    <div class="container text-center">
+      <h2 class="mb-4">Login</h2>
+      <div class="w-100 mx-auto" style="max-width: 320px;">
+        <div class="mb-3 text-start">
+          <label for="email" class="form-label">E-mail</label>
+          <input type="email" class="form-control" id="email" placeholder="exemplo@email.com" />
+        </div>
+        <div class="mb-3 text-start">
+          <label for="senha" class="form-label">Senha</label>
+          <input type="password" class="form-control" id="senha" placeholder="••••••••" />
+        </div>
+        <button class="btn btn-success w-100" onclick="logar()">Entrar</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tela de Cadastro -->
+  <section id="pagina-cadastro" class="pagina d-flex flex-column justify-content-center align-items-center" style="height: 100vh;">
+    <div class="container text-center">
+      <h2 class="mb-4">Cadastro</h2>
+      <div class="w-100 mx-auto" style="max-width: 320px;">
+        <div class="mb-3 text-start">
+          <label for="cad-email" class="form-label">E-mail</label>
+          <input type="email" class="form-control" id="cad-email" placeholder="exemplo@email.com" />
+        </div>
+        <div class="mb-3 text-start">
+          <label for="cad-senha" class="form-label">Senha</label>
+          <input type="password" class="form-control" id="cad-senha" placeholder="Crie uma senha" />
+        </div>
+        <button class="btn btn-primary w-100" onclick="cadastrar()">Cadastrar</button>
+        <p class="mt-3"><a href="#" onclick="mostrarPagina('pagina-login')">Já tem conta? Faça login</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Página Principal -->
+  <section id="pagina-app" class="pagina">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="#">Rota Rural Mercedes</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarMenu">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="#" onclick="mostrarSubPagina('pagina-tudo')">Tudo</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="mostrarSubPagina('pagina-lazer')">Lazer</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="mostrarSubPagina('pagina-comercio')">Comércio</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="mostrarSubPagina('pagina-lanchonete')">Lanchonete</a></li>
+            <li class="nav-item"><a class="nav-link" href="#" onclick="mostrarSubPagina('pagina-pontos-turisticos')">Pontos Turísticos</a></li>
+            <li class="nav-item"><button class="btn btn-outline-light ms-2" onclick="logout()">Sair</button></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Subpáginas -->
+    <section id="pagina-tudo" class="interna ativa">
+      <div class="container text-center mt-4">
+        <h1>Descubra Tudo sobre Mercedes</h1>
+        <p>Este site tem como objetivo fornecer informações detalhadas sobre a cidade de Mercedes...</p>
+      </div>
+    </section>
+
+    <section id="pagina-lazer" class="interna">
+      <div class="container mt-4">
+        <h2 class="text-center">Lazer</h2>
+        <div class="row mt-4">
+          <div class="col-md-4">
+            <div class="card">
+              <img src="img/parque.png" class="card-img-top" alt="Parque de Lazer Arroio Guaçu">
+              <div class="card-body">
+                <h5 class="card-title">Parque de Lazer Arroio Guaçu</h5>
+                <p class="card-text">Espaço ideal para lazer ao ar livre com a família.</p>
+                <a href="https://maps.app.goo.gl/Be2p6qKeVaXywqYT7" class="btn btn-success" target="_blank">Ver no Mapa</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card">
+              <img src="img/estancia_weber.png" class="card-img-top" alt="Estância Weber">
+              <div class="card-body">
+                <h5 class="card-title">Estância Weber</h5>
+                <p class="card-text">Contato com a natureza e tranquilidade.</p>
+                <a href="https://maps.app.goo.gl/Be2p6qKeVaXywqYT7" class="btn btn-success" target="_blank">Ver no Mapa</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card">
+              <img src="img/estancia_ipe.png" class="card-img-top" alt="Estância Ipê">
+              <div class="card-body">
+                <h5 class="card-title">Estância Ipê</h5>
+                <p class="card-text">Tranquilidade e natureza em sua forma pura.</p>
+                <a href="https://maps.app.goo.gl/cFkfYPrcugUVWbQ4A" class="btn btn-success" target="_blank">Ver no Mapa</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pagina-comercio" class="interna">
+      <div class="container mt-4 text-center">
+        <h2>Comércio</h2>
+        <p>Em breve...</p>
+      </div>
+    </section>
+
+    <section id="pagina-lanchonete" class="interna">
+      <div class="container mt-4">
+        <h2 class="text-center">Lanchonetes</h2>
+        <div class="row mt-4">
+          <div class="col-md-4">
+            <div class="card">
+              <img src="img/rancho.png" class="card-img-top" alt="Lanchonete Rancho">
+              <div class="card-body">
+                <h5 class="card-title">Lanchonete Rancho</h5>
+                <p class="card-text">Lanches saborosos em ambiente acolhedor.</p>
+                <a href="https://maps.google.com" class="btn btn-success" target="_blank">Ver no Mapa</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="pagina-pontos-turisticos" class="interna">
+      <div class="container mt-4 text-center">
+        <h2>Pontos Turísticos</h2>
+        <p>Em breve...</p>
+      </div>
+    </section>
+
+    <footer>
+      <p>Contatos: <a href="mailto:contato@rotaruralmercedes.com">contato@rotaruralmercedes.com</a> | Tel: (XX) XXXX-XXXX</p>
+      <p>&copy; 2025 Rota Rural Mercedes - Todos os direitos reservados.</p>
+    </footer>
+  </section>
+
+  <script>
+    function mostrarPagina(id) {
+      // Remover todas as classes 'ativa' e esconder todas as páginas
+      document.querySelectorAll(".pagina").forEach(p => {
+        p.classList.remove("ativa");
+        p.style.opacity = 0;
+      });
+      
+      // Mostrar a nova página
+      const nova = document.getElementById(id);
+      nova.classList.add("ativa");
+      setTimeout(() => nova.style.opacity = 1, 10);
+
+      // Rolar a página para o topo
+      window.scrollTo(0, 0);
+    }
+
+    function fazerLogin() {
+      mostrarPagina('pagina-login');
+    }
+
+    function logar() {
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
+
+      if (email && senha) {
+        // Simula o login
+        localStorage.setItem('logado', 'true');
+        mostrarPagina('pagina-app');
+      } else {
+        alert('Por favor, preencha todos os campos.');
+      }
+    }
+
+    function mostrarSubPagina(subId) {
+      if (localStorage.getItem("logado") === "true") {
+        document.querySelectorAll(".interna").forEach(s => s.classList.remove("ativa"));
+        document.getElementById(subId).classList.add("ativa");
+      } else {
+        alert("Você precisa estar logado para acessar esta seção.");
+        mostrarPagina("pagina-login");
+      }
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
